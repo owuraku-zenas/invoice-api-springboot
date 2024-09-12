@@ -21,9 +21,9 @@ public class Item {
     private Double unitPrice;
     private Integer quantity;
     private Double totalPrice;
-    @ManyToOne
-    @JoinColumn(name = "vendor_id", nullable = false)
-    private User vendor;
+//    @ManyToOne
+//    @JoinColumn(name = "vendor_id", nullable = false)
+//    private User vendor;
     @OneToMany(mappedBy = "item")
     private Set<InvoiceItem> invoiceItems;
 }
