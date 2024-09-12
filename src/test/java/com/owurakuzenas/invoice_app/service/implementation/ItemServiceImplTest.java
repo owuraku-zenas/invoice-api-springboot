@@ -9,6 +9,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -55,5 +57,32 @@ class ItemServiceImplTest {
         assertEquals(205.0, savedItem.getTotalPrice());
 
         verify(itemRepository, times(1)).save(any(Item.class));
+    }
+
+    @Test
+    void caGetItemById() {
+        int itemId = 1;
+
+        Item item = new Item();
+        item.setId((long) itemId);
+        item.setName("Boulder");
+        item.setDescription("Boulder");
+        item.setUnitPrice(20.5);
+        item.setQuantity(10);
+        item.setTotalPrice(205.0);
+
+        when(itemRepository.findById((long) itemId)).thenReturn(Optional.of(item));
+
+        Item foundItem = itemService.getItem(itemId);
+
+        assertDoesNotThrow(() -> new RuntimeException());
+        assertNotNull(foundItem);
+        assertEquals("Boulder", foundItem.getName());
+        assertEquals("Boulder", foundItem.getDescription());
+        assertEquals(20.5, foundItem.getUnitPrice());
+        assertEquals(10, foundItem.getQuantity());
+        assertEquals(205.0, foundItem.getTotalPrice());
+
+        verify(itemRepository, times(1)).findById((long) itemId);
     }
 }

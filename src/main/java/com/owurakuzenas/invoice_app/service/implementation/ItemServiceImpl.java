@@ -6,7 +6,6 @@ import com.owurakuzenas.invoice_app.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -17,7 +16,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item getItem(int id) {
-        return null;
+        return itemRepository.findById((long) id).orElseThrow(() -> new RuntimeException("No Item found"));
     }
 
     @Override
