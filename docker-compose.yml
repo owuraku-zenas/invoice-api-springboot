@@ -12,15 +12,6 @@ services:
       - "5432:5432"
     networks:
       - app-network
-
-  adminer:
-    image: adminer
-    container_name: adminer_container
-    ports:
-      - "8000:8000"
-    networks:
-      - app-network
-
 networks:
   app-network:
     driver: bridge

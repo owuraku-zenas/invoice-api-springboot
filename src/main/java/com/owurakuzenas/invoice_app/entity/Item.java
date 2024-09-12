@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @Entity
 @AllArgsConstructor
@@ -22,7 +24,6 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "vendor_id", nullable = false)
     private User vendor;
-    @ManyToOne
-    @JoinColumn(name = "invoice_id", nullable = false)
-    private Invoice invoice;
+    @OneToMany(mappedBy = "item")
+    private Set<InvoiceItem> invoiceItems;
 }

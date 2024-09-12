@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,17 +17,13 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Date issueDate;
     private Date dueDate;
-
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private User customer;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "invoice", fetch = FetchType.LAZY)
-    private List<Item> items;
-
+    private String invoiceNumber;
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<InvoiceItem> invoiceItems;
     private Double totalPrice;
-
 }
