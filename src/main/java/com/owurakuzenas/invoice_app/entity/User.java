@@ -1,5 +1,6 @@
 package com.owurakuzenas.invoice_app.entity;
 
+import com.owurakuzenas.invoice_app.enums.UserType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -18,4 +19,5 @@ public class User {
     @GeneratedValue
     private Long id;
     private String username;
+    private UserType userType;
 }
