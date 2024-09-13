@@ -35,7 +35,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item updateItem(Item item) {
-        return null;
+    public Item updateItem(Item item, int id) {
+        itemRepository.findById((long) id).orElseThrow(() -> new RuntimeException("No Item found"));
+        item.setId((long) id);
+        return itemRepository.save(item);
     }
 }

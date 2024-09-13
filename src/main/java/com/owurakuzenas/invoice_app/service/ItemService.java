@@ -9,5 +9,5 @@ public interface ItemService {
     public Set<Item> getAllItems();
     public Item saveItem(Item item);
     public Boolean deleteItem(int id);
-    public Item updateItem(Item item);
+    public Item updateItem(Item item, int id);
 }

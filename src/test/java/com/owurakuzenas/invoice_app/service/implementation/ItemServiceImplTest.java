@@ -85,4 +85,48 @@ class ItemServiceImplTest {
 
         verify(itemRepository, times(1)).findById((long) itemId);
     }
+
+    @Test
+    void canUpdateItem() {
+        Item item = new Item();
+        item.setName("Boulder");
+        item.setDescription("Boulder");
+        item.setUnitPrice(20.5);
+        item.setQuantity(10);
+        item.setTotalPrice(205.0);
+
+
+        when(itemRepository.save(any(Item.class))).thenAnswer(invocation -> {
+                    Item savedItem = invocation.getArgument(0);
+                    savedItem.setId(1L);
+                    return savedItem;
+                }
+        );
+
+        Item savedItem = itemService.saveItem(item);
+
+        Item itemUpdate = new Item();
+        itemUpdate.setName(savedItem.getName());
+        itemUpdate.setDescription("Changed description");
+        itemUpdate.setUnitPrice(100.0);
+        itemUpdate.setQuantity(10);
+        itemUpdate.setTotalPrice(1000.0);
+
+
+        when(itemRepository.findById(savedItem.getId())).thenReturn(Optional.of(savedItem));
+        when(itemRepository.save(any(Item.class))).thenReturn(itemUpdate);
+
+        Item updatedItem = itemService.updateItem(itemUpdate, Math.toIntExact(savedItem.getId()));
+
+        assertDoesNotThrow(() -> new RuntimeException());
+        assertNotNull(updatedItem);
+        assertEquals("Boulder", updatedItem.getName());
+        assertEquals("Changed description", updatedItem.getDescription());
+        assertEquals(100.0, updatedItem.getUnitPrice());
+        assertEquals(10, updatedItem.getQuantity());
+        assertEquals(1000.0, updatedItem.getTotalPrice());
+
+        verify(itemRepository, times(2)).save(any(Item.class));
+
+    }
 }
